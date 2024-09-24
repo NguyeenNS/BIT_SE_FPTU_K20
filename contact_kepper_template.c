@@ -2,6 +2,32 @@
 #include <stdlib.h>
 
 
+void add_contact();
+void edit_contact();
+void delete_contact();
+int make_choice();
+
+
+int main(void)
+{
+	void (*funs[4])(void) = {NULL, &add_contact, &edit_contact, &delete_contact};
+	int choice;
+
+	do
+	{
+		choice = make_choice(0, 3);
+		if (choice)
+		{
+			funs[choice]();
+			printf("\nPress Enter to return to the menu.");
+			getchar();
+		}
+	}
+	while (choice);
+
+	return 0;
+}
+
 void print_menu()
 {
 	system("cls"); // cls -> win ; clear -> mac, linux
@@ -14,7 +40,7 @@ void print_menu()
 }
 
 
-int main_choice(int min, int max)
+int make_choice(int min, int max)
 {
 	int not_valid = 1, num, scanf_ret;
 	char c;
@@ -23,7 +49,7 @@ int main_choice(int min, int max)
 	fflush(stdin);
 	do
 	{
-		printf("\nEnter yyour choice: ");
+		printf("\nEnter your choice: ");
 		scanf_ret = scanf("%d%c", &num, &c);
 		if (scanf_ret < 2 || c != '\n')
 		{
@@ -65,23 +91,3 @@ void delete_contact()
 	printf("Write your code here to implement the delete_contact() function.\n");
 }
 
-
-int main(void)
-{
-	void (*fun[4])(void) = {NULL, &add_contact, &edit_contact, &delete_contact};
-	int choice;
-
-	do
-	{
-		choice = make_choice(0, 3);
-		if (choice)
-		{
-			fun[choice]();
-			printf("\nPress any key to return to the menu.");
-			getchar();
-		}
-	}
-	while (choice);
-
-	return 0;
-}
